@@ -24,7 +24,7 @@ function generateSchedule() {
 
     let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-    let schedule = `Course: ${courseName} (${courseCode})\nInstructor: ${instructorName}\nLocation: ${location}\n`;
+    let schedule = `Course: ${courseName} (${courseCode})\nInstructor: ${instructorName}\nLocation: ${location}\n`;g
     schedule += `Session: ${sessionType}\nTime: ${slotTimes[slot]}\nDay: ${weekdays[weekDay]}\nRepeats: ${repetitionType}\nWeeks: ${numWeeks}\n\n`;
 
     for (let i = 0; i < numWeeks; i++) {
