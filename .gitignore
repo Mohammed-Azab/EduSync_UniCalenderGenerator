@@ -1,0 +1,15 @@
+__pycache__/\n*.pyc\n*.pyo\n*.pyd\nvenv/\n.env/\noutput/\n.DS_Store\nThumbs.db
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environments
+venv/
+.env/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
