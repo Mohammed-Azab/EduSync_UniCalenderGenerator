@@ -1,6 +1,10 @@
-document.getElementById("generateBtn").addEventListener("click", generateSchedule);
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("generateBtn").addEventListener("click", generateSchedule);
+});
 
 function generateSchedule() {
+    console.log("Button clicked! Function is running.");
+
     let courseName = document.getElementById("courseName").value.trim();
     let courseCode = document.getElementById("courseCode").value.trim() || "N/A";
     let instructorName = document.getElementById("instructorName").value.trim() || "N/A";
@@ -11,7 +15,7 @@ function generateSchedule() {
     let numWeeks = parseInt(document.getElementById("numWeeks").value);
     let repetitionType = document.getElementById("repetitionType").value;
 
-    if (!courseName || !slot || isNaN(numWeeks) || numWeeks < 1) {
+    if (!courseName || isNaN(slot) || isNaN(numWeeks) || numWeeks < 1) {
         alert("Please fill in all required fields correctly.");
         return;
     }
@@ -56,4 +60,6 @@ function generateSchedule() {
     let listItem = document.createElement("li");
     listItem.appendChild(link);
     document.getElementById("fileList").appendChild(listItem);
+
+    console.log("Schedule generated successfully.");
 }
