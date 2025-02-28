@@ -1,6 +1,7 @@
 import datetime
 import os
 import pytz
+import holidays
 from icalendar import Calendar, Event
 
 OUTPUT_DIR = "output"
@@ -25,6 +26,9 @@ WEEKDAYS = {
 }
 
 SESSION_TYPES = ["Lecture", "Tutorial", "Lab"]
+
+GERMAN_HOLIDAYS = holidays.Germany(years=datetime.date.today().year)
+
 
 def get_session_details():
     course_name = input("Enter course name: ").strip()
@@ -99,6 +103,7 @@ def get_session_details():
         "num_weeks": num_weeks,
     }
 
+
 def create_ics_file(sessions):
     timezone = pytz.timezone("Europe/Berlin")
     today = datetime.date.today()
@@ -120,8 +125,14 @@ def create_ics_file(sessions):
 
         start_date = today + datetime.timedelta(days=(session["week_day"] - today.weekday()) % 7)
         interval = 1 if session["repetition_type"] == "weekly" else 2
+        weeks_added = 0
 
-        for _ in range(session["num_weeks"]):
+        while weeks_added < session["num_weeks"]:
+            if start_date in GERMAN_HOLIDAYS:
+                print(f"Skipping {start_date} due to holiday: {GERMAN_HOLIDAYS[start_date]}")
+                start_date += datetime.timedelta(weeks=interval)
+                continue
+
             event = Event()
             event.add("summary", f"{session['course_name']} - {session['session_type']}")
             event.add("location", session["location"])
@@ -132,15 +143,16 @@ def create_ics_file(sessions):
             event.add("dtend", timezone.localize(datetime.datetime.combine(start_date, end_time)))
 
             event.add("description", f"Instructor: {session['instructor']}\nCourse Code: {session['course_code']}")
-            event.add("rrule", {"freq": "WEEKLY", "interval": interval})
-
             cal.add_component(event)
+
+            weeks_added += 1
             start_date += datetime.timedelta(weeks=interval)
 
         with open(filename, "wb") as f:
             f.write(cal.to_ical())
 
         print(f"✅ Schedule saved at {filename}")
+
 
 sessions = []
 while True:
