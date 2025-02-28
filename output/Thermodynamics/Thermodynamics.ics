@@ -1,0 +1,100 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//University Schedule//mxm.dk//
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250301T083000
+DTEND;TZID=Europe/Berlin:20250301T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250315T083000
+DTEND;TZID=Europe/Berlin:20250315T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250329T083000
+DTEND;TZID=Europe/Berlin:20250329T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250412T083000
+DTEND;TZID=Europe/Berlin:20250412T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250426T083000
+DTEND;TZID=Europe/Berlin:20250426T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250510T083000
+DTEND;TZID=Europe/Berlin:20250510T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250524T083000
+DTEND;TZID=Europe/Berlin:20250524T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250607T083000
+DTEND;TZID=Europe/Berlin:20250607T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250621T083000
+DTEND;TZID=Europe/Berlin:20250621T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250705T083000
+DTEND;TZID=Europe/Berlin:20250705T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250719T083000
+DTEND;TZID=Europe/Berlin:20250719T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Thermodynamics - Lecture
+DTSTART;TZID=Europe/Berlin:20250802T083000
+DTEND;TZID=Europe/Berlin:20250802T100000
+DESCRIPTION:Instructor: MOhammed Azab (mo7ammed3zab@outlook.com)\nCourse C
+ ode: thermo101
+LOCATION:Berlin\, Geramny
+END:VEVENT
+END:VCALENDAR
