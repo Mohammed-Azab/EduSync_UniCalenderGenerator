@@ -23,8 +23,23 @@ function generateSchedule() {
     let numWeeks = parseInt(document.getElementById("numWeeks").value);
     let repetitionType = document.getElementById("repetitionType").value;
 
-    if (!courseName || isNaN(slot) || isNaN(numWeeks) || numWeeks < 1) {
+    if (!courseName || isNaN(slot) || isNaN(numWeeks) || isNaN(weekDay)) {
         alert("Please fill in all required fields correctly.");
+        return;
+    }
+
+    if (slot < 1 || slot > 5) {
+        alert("Slot must be between 1 and 5.");
+        return;
+    }
+
+    if (weekDay < 0 || weekDay > 6) {
+        alert("Weekday must be between 0 (Sunday) and 6 (Saturday).");
+        return;
+    }
+
+    if (numWeeks < 1) {
+        alert("Number of weeks must be a positive integer.");
         return;
     }
 
