@@ -29,17 +29,17 @@ function generateSchedule() {
     }
 
     if (!Number.isInteger(slot) || slot < 1 || slot > 5) {
-        alert("Slot must be an integer between 1 and 5.");
+        alert("Invalid Slot: Must be an integer between 1 and 5.");
         return;
     }
 
-    if (weekDay < 0 || weekDay > 6) {
-        alert("Weekday must be between 0 (Sunday) and 6 (Saturday).");
+    if (!Number.isInteger(weekDay) || weekDay < 0 || weekDay > 6) {
+        alert("Invalid Weekday: Must be between 0 (Sunday) and 6 (Saturday).");
         return;
     }
 
-    if (!Number.isInteger(numWeeks) ||numWeeks < 1) {
-        alert("Number of weeks must be a positive integer.");
+    if (!Number.isInteger(numWeeks) || numWeeks < 1) {
+        alert("Invalid Number of Weeks: Must be a positive integer.");
         return;
     }
 
@@ -52,7 +52,6 @@ function generateSchedule() {
     };
 
     let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
     let [startTime, endTime] = slotTimes[slot].split(" - ");
 
     function formatDateTime(date, time) {
