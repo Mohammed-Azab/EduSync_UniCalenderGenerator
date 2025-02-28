@@ -1,5 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("generateBtn").addEventListener("click", generateSchedule);
+    console.log("Script loaded! Checking for button...");
+
+    let button = document.getElementById("generateBtn");
+    if (button) {
+        console.log("Button found! Adding event listener.");
+        button.addEventListener("click", generateSchedule);
+    } else {
+        console.error("Button not found!");
+    }
 });
 
 function generateSchedule() {
@@ -28,13 +36,15 @@ function generateSchedule() {
         5: "16:00 - 17:30",
     };
 
-    let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     let schedule = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Mohammed Abdelazim//Uni Schedule//EN\n`;
 
     let currentDate = new Date();
     let dayDifference = (weekDay - currentDate.getDay() + 7) % 7;
     currentDate.setDate(currentDate.getDate() + dayDifference);
+
+    console.log(`Starting date adjusted to: ${currentDate.toDateString()}`);
 
     for (let i = 0; i < numWeeks; i++) {
         let weekOffset = i * (repetitionType === "weekly" ? 7 : 14);
