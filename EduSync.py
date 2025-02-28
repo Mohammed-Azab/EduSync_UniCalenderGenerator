@@ -24,6 +24,7 @@ WEEKDAYS = {
     "sun": 6,
 }
 
+SESSION_TYPES = ["Lecture", "Tutorial", "Lab"]
 
 def get_session_details():
     course_name = input("Enter course name: ").strip()
@@ -35,6 +36,20 @@ def get_session_details():
     instructor_name = input("Enter instructor's name (Press Enter to skip): ").strip()
     instructor_email = input("Enter instructor's email (Press Enter to skip): ").strip()
     location = input("Enter location (Press Enter to skip): ").strip()
+
+    while True:
+        print("Select session type:")
+        for i, session_type in enumerate(SESSION_TYPES, start=1):
+            print(f"{i}. {session_type}")
+        session_type_input = input("Enter the number corresponding to the session type: ").strip()
+        try:
+            session_type_index = int(session_type_input) - 1
+            if 0 <= session_type_index < len(SESSION_TYPES):
+                session_type = SESSION_TYPES[session_type_index]
+                break
+            print("Invalid choice. Please enter a valid number.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
     while True:
         slot_input = input("Enter slot number (1-5): ").strip()
@@ -75,6 +90,7 @@ def get_session_details():
     return {
         "course_name": course_name,
         "course_code": course_code or "N/A",
+        "session_type": session_type,
         "instructor": f"{instructor_name} ({instructor_email})" if instructor_name else "N/A",
         "location": location or "N/A",
         "slot": slot,
@@ -82,7 +98,6 @@ def get_session_details():
         "repetition_type": repetition_type,
         "num_weeks": num_weeks,
     }
-
 
 def create_ics_file(sessions):
     timezone = pytz.timezone("Europe/Berlin")
@@ -108,7 +123,7 @@ def create_ics_file(sessions):
 
         for _ in range(session["num_weeks"]):
             event = Event()
-            event.add("summary", session["course_name"])
+            event.add("summary", f"{session['course_name']} - {session['session_type']}")
             event.add("location", session["location"])
 
             start_time = SLOT_MAP[session["slot"]]
@@ -126,7 +141,6 @@ def create_ics_file(sessions):
             f.write(cal.to_ical())
 
         print(f"✅ Schedule saved at {filename}")
-
 
 sessions = []
 while True:
