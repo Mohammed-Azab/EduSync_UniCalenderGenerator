@@ -5,13 +5,14 @@ EduSync is a Python script that generates `.ics` calendar files for university c
 ## Features
 - Interactive prompts for entering course details.
 - Requires a time slot (1-5) and weekday selection.
-- Asks for the number of weeks before deciding weekly/biweekly repetition.
-- Automatically defaults to weekly for courses lasting 2 weeks or fewer.
+- Allows weekly or biweekly session repetition.
+-  Supports Lectures, Tutorials, and Lab sessions.
 - Saves schedules in structured `.ics` files for easy import.
+- **NEW:** Automatically skips sessions on German public holidays.
 
 ## Requirements
 - Python 3.x
-- Required packages: `icalendar`, `pytz`
+- Required packages: `icalendar`, `pytz`, `holidays`
 
 ## Installation
 1. Clone the repository:
@@ -33,6 +34,10 @@ Run the script:
 python EduSync.py
 ```
 Follow the prompts to enter course details. The script will generate `.ics` files in the `output/` directory.
+
+### Holiday Skipping
+- The script checks German public holidays and **skips sessions falling on those days**.
+- If a session falls on a holiday, it will be moved to the next available week.
 
 ## Contributing
 Contributions are welcome! Feel free to fork the repository, make improvements, and submit a pull request.
