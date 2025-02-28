@@ -28,8 +28,8 @@ function generateSchedule() {
         return;
     }
 
-    if (slot < 1 || slot > 5) {
-        alert("Slot must be between 1 and 5.");
+    if (!Number.isInteger(slot) || slot < 1 || slot > 5) {
+        alert("Slot must be an integer between 1 and 5.");
         return;
     }
 
@@ -38,7 +38,7 @@ function generateSchedule() {
         return;
     }
 
-    if (numWeeks < 1) {
+    if (!Number.isInteger(numWeeks) ||numWeeks < 1) {
         alert("Number of weeks must be a positive integer.");
         return;
     }
@@ -53,6 +53,15 @@ function generateSchedule() {
 
     let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
+    let [startTime, endTime] = slotTimes[slot].split(" - ");
+
+    function formatDateTime(date, time) {
+        let [hours, minutes] = time.split(":").map(Number);
+        let newDate = new Date(date);
+        newDate.setHours(hours, minutes, 0);
+        return newDate.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+    }
+
     let schedule = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Mohammed Abdelazim//Uni Schedule//EN\n`;
 
     let currentDate = new Date();
@@ -66,10 +75,11 @@ function generateSchedule() {
         let eventDate = new Date(currentDate);
         eventDate.setDate(eventDate.getDate() + weekOffset);
 
-        let formattedDate = eventDate.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+        let dtStart = formatDateTime(eventDate, startTime);
+        let dtEnd = formatDateTime(eventDate, endTime);
 
         schedule += `BEGIN:VEVENT\nSUMMARY:${courseName} (${sessionType})\nLOCATION:${location}\n`;
-        schedule += `DTSTART:${formattedDate}\nDTEND:${formattedDate}\nDESCRIPTION:Instructor: ${instructorName}, Course Code: ${courseCode}\nEND:VEVENT\n`;
+        schedule += `DTSTART:${dtStart}\nDTEND:${dtEnd}\nDESCRIPTION:Instructor: ${instructorName}, Course Code: ${courseCode}\nEND:VEVENT\n`;
     }
     schedule += "END:VCALENDAR";
 
