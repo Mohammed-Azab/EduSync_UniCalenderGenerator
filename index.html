@@ -52,19 +52,11 @@
             <option value="biweekly">Biweekly</option>
         </select>
 
-        <button onclick="generateSchedule()">Generate Schedule</button>
+        <button id="generateBtn">Generate Schedule</button>
 
-        <!-- Download link for the ICS file -->
-        <a id="downloadLink" style="display: none; margin-top: 10px;" download>Download ICS Calendar File</a>
-
-        <h2>Generated Schedule:</h2>
-        <pre id="output"></pre>
+        <h2>Generated Schedules:</h2>
+        <ul id="fileList"></ul>
     </div>
-
-    <!-- Copyright Footer -->
-    <footer>
-        <p>&copy; 2025 Mohammed EL Said Azab Abdelazim. All rights reserved.</p>
-    </footer>
 
     <script src="script.js"></script>
 </body>

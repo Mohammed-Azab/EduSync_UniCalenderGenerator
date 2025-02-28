@@ -1,65 +1,59 @@
+document.getElementById("generateBtn").addEventListener("click", generateSchedule);
+
 function generateSchedule() {
-    let courseName = document.getElementById("courseName").value;
-    let courseCode = document.getElementById("courseCode").value || "N/A";
-    let instructorName = document.getElementById("instructorName").value || "N/A";
-    let location = document.getElementById("location").value || "N/A";
+    let courseName = document.getElementById("courseName").value.trim();
+    let courseCode = document.getElementById("courseCode").value.trim() || "N/A";
+    let instructorName = document.getElementById("instructorName").value.trim() || "N/A";
+    let location = document.getElementById("location").value.trim() || "N/A";
     let sessionType = document.getElementById("sessionType").value;
     let slot = parseInt(document.getElementById("slot").value);
     let weekDay = parseInt(document.getElementById("weekDay").value);
     let numWeeks = parseInt(document.getElementById("numWeeks").value);
     let repetitionType = document.getElementById("repetitionType").value;
 
-    if (!courseName || !slot || !numWeeks) {
-        alert("Please fill in all required fields: Course Name, Slot, and Number of Weeks.");
+    if (!courseName || !slot || isNaN(numWeeks) || numWeeks < 1) {
+        alert("Please fill in all required fields correctly.");
         return;
     }
 
     let slotTimes = {
-        1: { start: "08:30", end: "10:00" },
-        2: { start: "10:30", end: "12:00" },
-        3: { start: "12:15", end: "13:45" },
-        4: { start: "14:15", end: "15:45" },
-        5: { start: "16:00", end: "17:30" },
+        1: "08:30 - 10:00",
+        2: "10:30 - 12:00",
+        3: "12:15 - 13:45",
+        4: "14:15 - 15:45",
+        5: "16:00 - 17:30",
     };
 
-    let weekdays = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+    let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-    // Start building ICS file
-    let icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Uni Calendar//EN\nCALSCALE:GREGORIAN\n`;
+    let schedule = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Mohammed Abdelazim//Uni Schedule//EN\n`;
 
-    let now = new Date();
-    let startDate = new Date(now.getFullYear(), 0, 1); // Start of the year
-    while (startDate.getDay() !== weekDay) {
-        startDate.setDate(startDate.getDate() + 1); // Move to the first correct weekday
-    }
+    let currentDate = new Date();
+    let dayDifference = (weekDay - currentDate.getDay() + 7) % 7;
+    currentDate.setDate(currentDate.getDate() + dayDifference);
 
     for (let i = 0; i < numWeeks; i++) {
-        let eventStart = new Date(startDate);
-        eventStart.setDate(startDate.getDate() + i * (repetitionType === "weekly" ? 7 : 14));
+        let weekOffset = i * (repetitionType === "weekly" ? 7 : 14);
+        let eventDate = new Date(currentDate);
+        eventDate.setDate(eventDate.getDate() + weekOffset);
 
-        let eventStartDate = `${eventStart.getFullYear()}${String(eventStart.getMonth() + 1).padStart(2, "0")}${String(eventStart.getDate()).padStart(2, "0")}T${slotTimes[slot].start.replace(":", "")}00`;
-        let eventEndDate = `${eventStart.getFullYear()}${String(eventStart.getMonth() + 1).padStart(2, "0")}${String(eventStart.getDate()).padStart(2, "0")}T${slotTimes[slot].end.replace(":", "")}00`;
+        let formattedDate = eventDate.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 
-        icsContent += `BEGIN:VEVENT\n`;
-        icsContent += `SUMMARY:${courseName} - ${sessionType}\n`;
-        icsContent += `DESCRIPTION:Instructor: ${instructorName}\\nLocation: ${location}\\nCourse Code: ${courseCode}\n`;
-        icsContent += `LOCATION:${location}\n`;
-        icsContent += `DTSTART:${eventStartDate}Z\n`;
-        icsContent += `DTEND:${eventEndDate}Z\n`;
-        icsContent += `RRULE:FREQ=${repetitionType.toUpperCase()};COUNT=${numWeeks};BYDAY=${weekdays[weekDay]}\n`;
-        icsContent += `END:VEVENT\n`;
+        schedule += `BEGIN:VEVENT\nSUMMARY:${courseName} (${sessionType})\nLOCATION:${location}\n`;
+        schedule += `DTSTART:${formattedDate}\nDTEND:${formattedDate}\nDESCRIPTION:Instructor: ${instructorName}, Course Code: ${courseCode}\nEND:VEVENT\n`;
     }
+    schedule += "END:VCALENDAR";
 
-    icsContent += `END:VCALENDAR`;
+    let file = new Blob([schedule], { type: "text/calendar" });
+    let fileURL = URL.createObjectURL(file);
+    let filename = `${courseName.replace(/\s+/g, "_")}_Schedule.ics`;
 
-    // Create a downloadable .ics file
-    let blob = new Blob([icsContent], { type: "text/calendar" });
-    let url = URL.createObjectURL(blob);
+    let link = document.createElement("a");
+    link.href = fileURL;
+    link.download = filename;
+    link.textContent = filename;
 
-    let downloadLink = document.getElementById("downloadLink");
-    downloadLink.href = url;
-    downloadLink.download = `${courseName.replace(/\s+/g, '_')}_Schedule.ics`;
-    downloadLink.style.display = "block";
-
-    document.getElementById("output").innerText = "ICS file generated. Click the link below to download.";
+    let listItem = document.createElement("li");
+    listItem.appendChild(link);
+    document.getElementById("fileList").appendChild(listItem);
 }
