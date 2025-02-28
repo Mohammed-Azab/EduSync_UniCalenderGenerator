@@ -29,7 +29,7 @@ function generateSchedule() {
     }
 
     if (!Number.isInteger(slot) || slot < 1 || slot > 5) {
-        alert("Invalid Slot: Must be an integer between 1 and 5.");
+        alert("Invalid Slot: Must be a positive integer between 1 and 5.");
         return;
     }
 
@@ -58,7 +58,20 @@ function generateSchedule() {
         let [hours, minutes] = time.split(":").map(Number);
         let newDate = new Date(date);
         newDate.setHours(hours, minutes, 0);
-        return newDate.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+
+        return new Intl.DateTimeFormat("en-GB", {
+            timeZone: "Europe/Berlin",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hourCycle: "h23"
+        }).formatToParts(newDate).reduce((acc, { type, value }) => {
+            acc[type] = value;
+            return acc;
+        }, {});
     }
 
     let schedule = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Mohammed Abdelazim//Uni Schedule//EN\n`;
@@ -74,8 +87,11 @@ function generateSchedule() {
         let eventDate = new Date(currentDate);
         eventDate.setDate(eventDate.getDate() + weekOffset);
 
-        let dtStart = formatDateTime(eventDate, startTime);
-        let dtEnd = formatDateTime(eventDate, endTime);
+        let dtStartParts = formatDateTime(eventDate, startTime);
+        let dtEndParts = formatDateTime(eventDate, endTime);
+
+        let dtStart = `${dtStartParts.year}${dtStartParts.month}${dtStartParts.day}T${dtStartParts.hour}${dtStartParts.minute}00`;
+        let dtEnd = `${dtEndParts.year}${dtEndParts.month}${dtEndParts.day}T${dtEndParts.hour}${dtEndParts.minute}00`;
 
         schedule += `BEGIN:VEVENT\nSUMMARY:${courseName} (${sessionType})\nLOCATION:${location}\n`;
         schedule += `DTSTART:${dtStart}\nDTEND:${dtEnd}\nDESCRIPTION:Instructor: ${instructorName}, Course Code: ${courseCode}\nEND:VEVENT\n`;
