@@ -1,13 +1,13 @@
 # University Course Schedule Generator
 
-This Python script generates `.ics` calendar files for university courses, allowing students to easily import their schedules into calendar applications.
+EduSync is a Python script that generates `.ics` calendar files for university courses, allowing students to easily import their schedules into calendar applications like Google Calendar and Outlook.
 
 ## Features
-- Prompts users to enter course details.
+- Interactive prompts for entering course details.
 - Requires a time slot (1-5) and weekday selection.
 - Asks for the number of weeks before deciding weekly/biweekly repetition.
-- Ensures courses with 2 or fewer weeks default to weekly.
-- Generates `.ics` files that can be imported into Google Calendar, Outlook, etc.
+- Automatically defaults to weekly for courses lasting 2 weeks or fewer.
+- Saves schedules in structured `.ics` files for easy import.
 
 ## Requirements
 - Python 3.x
@@ -35,7 +35,8 @@ python EduSync.py
 Follow the prompts to enter course details. The script will generate `.ics` files in the `output/` directory.
 
 ## Contributing
-Feel free to fork the project, make improvements, and submit a pull request!
+Contributions are welcome! Feel free to fork the repository, make improvements, and submit a pull request.
 
 ## License
-MIT License
+This project is licensed under the [MIT License](LICENSE).
+
