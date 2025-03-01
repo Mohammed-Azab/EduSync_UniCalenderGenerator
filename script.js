@@ -55,20 +55,11 @@ function generateSchedule() {
     let [startTime, endTime] = slotTimes[slot].split(" - ");
 
     function formatDateTime(date, time) {
-        let [hours, minutes] = time.split(":" ).map(Number);
+        let [hours, minutes] = time.split(":").map(Number);
         let newDate = new Date(date);
-        newDate.setHours(hours, minutes, 0, 0);
+        newDate.setHours(hours, minutes, 0);
 
-        // Convert to Berlin timezone explicitly
-        let options = { timeZone: "Europe/Berlin", year: "numeric", month: "2-digit", day: "2-digit",
-                        hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" };
-        let berlinTime = new Intl.DateTimeFormat("en-GB", options).format(newDate);
-
-        let [day, month, year, hour, minute, second] = berlinTime.match(/\d+/g);
-
-        return {
-            year, month, day, hour, minute, second
-        };
+        return newDate.toISOString().replace(/[-:]/g, "").split(".")[0]; // Converts to UTC format required for iCal
     }
 
     let schedule = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Mohammed Abdelazim//Uni Schedule//EN\n`;
@@ -84,14 +75,11 @@ function generateSchedule() {
         let eventDate = new Date(currentDate);
         eventDate.setDate(eventDate.getDate() + weekOffset);
 
-        let dtStartParts = formatDateTime(eventDate, startTime);
-        let dtEndParts = formatDateTime(eventDate, endTime);
-
-        let dtStart = `${dtStartParts.year}${dtStartParts.month}${dtStartParts.day}T${dtStartParts.hour}${dtStartParts.minute}00`;
-        let dtEnd = `${dtEndParts.year}${dtEndParts.month}${dtEndParts.day}T${dtEndParts.hour}${dtEndParts.minute}00`;
+        let dtStart = formatDateTime(eventDate, startTime);
+        let dtEnd = formatDateTime(eventDate, endTime);
 
         schedule += `BEGIN:VEVENT\nSUMMARY:${courseName} (${sessionType})\nLOCATION:${location}\n`;
-        schedule += `DTSTART:${dtStart}\nDTEND:${dtEnd}\nDESCRIPTION:Instructor: ${instructorName}, Course Code: ${courseCode}\nEND:VEVENT\n`;
+        schedule += `DTSTART:${dtStart}Z\nDTEND:${dtEnd}Z\nDESCRIPTION:Instructor: ${instructorName}, Course Code: ${courseCode}\nEND:VEVENT\n`;
     }
     schedule += "END:VCALENDAR";
 
