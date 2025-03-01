@@ -55,23 +55,20 @@ function generateSchedule() {
     let [startTime, endTime] = slotTimes[slot].split(" - ");
 
     function formatDateTime(date, time) {
-        let [hours, minutes] = time.split(":").map(Number);
+        let [hours, minutes] = time.split(":" ).map(Number);
         let newDate = new Date(date);
-        newDate.setHours(hours, minutes, 0);
+        newDate.setHours(hours, minutes, 0, 0);
 
-        return new Intl.DateTimeFormat("en-GB", {
-            timeZone: "Europe/Berlin",
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hourCycle: "h23"
-        }).formatToParts(newDate).reduce((acc, { type, value }) => {
-            acc[type] = value;
-            return acc;
-        }, {});
+        // Convert to Berlin timezone explicitly
+        let options = { timeZone: "Europe/Berlin", year: "numeric", month: "2-digit", day: "2-digit",
+                        hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" };
+        let berlinTime = new Intl.DateTimeFormat("en-GB", options).format(newDate);
+
+        let [day, month, year, hour, minute, second] = berlinTime.match(/\d+/g);
+
+        return {
+            year, month, day, hour, minute, second
+        };
     }
 
     let schedule = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Mohammed Abdelazim//Uni Schedule//EN\n`;
