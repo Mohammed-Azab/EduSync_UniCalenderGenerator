@@ -17,7 +17,7 @@ You can generate your schedule using either:
    - See [Usage](#usage) for details.
 2. **Web Version** *(Recommended for ease of use!)*
    - No installation required.
-   - Visit: [Uni Calendar Generator](https://mohammed-azab.github.io/UniCalenderGenerator/)
+   - Visit: [Uni Calendar Generator](https://mohammed-azab.github.io/EduSync_UniCalenderGenerator/)
 
 ## Requirements
 - Python 3.x
